@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SaltoBus - Comunidade</title>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+      (function() {
+        emailjs.init("SEU_USER_ID"); // Substitua pelo seu ID
+      })();
+    </script>
+
+  <script>
+    (function() {
+      // Substitua por seu ID
+      emailjs.init("TeL1bkT-auHUAQQTI"); 
+    })();
+  </script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #f4f4f4; }
+    header { background-color: #007bff; color: white; padding: 1rem; text-align: center; }
+    .container { padding: 2rem; max-width: 800px; margin: auto; background: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h2 { color: #007bff; }
+    form input, form textarea { width: 100%; padding: 0.75rem; margin: 0.5rem 0; border-radius: 5px; border: 1px solid #ccc; }
+    form button { padding: 0.75rem; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    .report-list { margin-top: 2rem; }
+    .report-item { background: #e9ecef; padding: 1rem; margin-bottom: 1rem; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>SaltoBus - Relatos da Comunidade</h1>
+    <p>Ajude a melhorar o transporte público em Salto</p>
+  </header>
+
+  <div class="container">
+    <h2>Relatar problema</h2>
+    <form id="reportForm">
+      <input type="text" id="nome" placeholder="Seu nome" required>
+      <input type="text" id="local" placeholder="Local do problema (ex: Ponto R. Nove de Julho, 815)" required>
+      <textarea id="relato" rows="5" placeholder="Descreva o que aconteceu" required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+
+    <div class="report-list" id="reportList">
+      <h2>Últimos relatos</h2>
+    </div>
+  </div>
+
+  <script>
+    const reportForm = document.getElementById('reportForm');
+    const reportList = document.getElementById('reportList');
+
+    reportForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const nome = document.getElementById('nome').value;
+      const local = document.getElementById('local').value;
+      const relato = document.getElementById('relato').value;
+
+      const item = document.createElement('div');
+      item.className = 'report-item';
+      item.innerHTML = `<strong>${nome}</strong> relatou em <em>${local}</em>:<br>${relato}`;
+      reportList.appendChild(item);
+
+      // Substitua por seu service ID e template ID
+      emailjs.send("service_336b202", "template_ruo5smn", {
+        nome: nome,
+        local: local,
+        relato: relato
+      }).then(function(response) {
+        alert("Relato enviado com sucesso!");
+      }, function(error) {
+        alert("Erro ao enviar e-mail: " + JSON.stringify(error));
+      });
+
+      reportForm.reset();
+    });
+  </script>
+</body>
+</html>
